@@ -1,0 +1,30 @@
+steps:
+  - name: "gcr.io/cloud-builders/gsutil"
+    args: ["cp", "${_ENV}", "backend/.env"]
+
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/be-auth-fikri", "."]
+    dir: "backend"
+
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/be-auth-fikri"]
+
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "run",
+        "deploy",
+        "be-auth-fikri",
+        "--image",
+        "gcr.io/$PROJECT_ID/be-auth-fikri",
+        "--timeout",
+        "1000s",
+        "--port",
+        "5000",
+        "--region",
+        "us-central1",
+        "--allow-unauthenticated",
+      ]
+
+options:
+  logging: CLOUD_LOGGING_ONLY

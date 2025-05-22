@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body, .App {
+  font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
+  background: #f4f6fa;
+  color: #2d3a4b;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
+  font-weight: 700;
+  color: #22304a;
+}
+
+button, input, select, textarea {
+  font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
+}
+
+.auth-form-container {
+  max-width: 400px;
+  margin: 60px auto 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 24px #e0e6ed;
+  padding: 40px 32px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.auth-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.auth-form input, .auth-form select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  font-size: 16px;
+  background: #f8fafc;
+  transition: border 0.2s;
+}
+.auth-form input:focus, .auth-form select:focus {
+  border: 1.5px solid #4a90e2;
+  outline: none;
+}
+.auth-form button {
+  padding: 12px 0;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #4a90e2 60%, #3578c6 100%);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 17px;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.auth-form button:disabled {
+  background: #b5c9e2;
+  cursor: not-allowed;
+}
+.auth-error {
+  color: #e74c3c;
+  margin-top: 6px;
+  font-size: 15px;
+  text-align: center;
+}
+.auth-success {
+  color: #1a7f37;
+  margin-top: 6px;
+  font-size: 15px;
+  text-align: center;
+}
+.auth-switch {
+  margin-top: 18px;
+  color: #4a90e2;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+}
+.auth-switch span {
+  text-decoration: underline;
+  cursor: pointer;
+}
