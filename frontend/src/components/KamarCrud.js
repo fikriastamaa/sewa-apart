@@ -69,6 +69,11 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
     setShowPopup(false);
   };
 
+  // Pastikan apartemen adalah array agar .map tidak error
+  const safeApartemen = Array.isArray(apartemen) ? apartemen : [];
+  // Pastikan kamar adalah array agar .map tidak error
+  const safeKamar = Array.isArray(kamar) ? kamar : [];
+
   return (
     <div style={{ maxWidth: 700, margin: '40px auto', background: '#fff', borderRadius: 12, boxShadow: '0 2px 16px #eee', padding: 32 }}>
       <h3 style={{ color: '#4a90e2', marginBottom: 16 }}>CRUD Kamar</h3>
@@ -76,7 +81,7 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
       <form onSubmit={handleSubmit} style={{ display: editId ? 'none' : 'flex', gap: 8, marginBottom: 24, flexWrap: 'wrap' }}>
         <select name="id_apartemen" value={form.id_apartemen} onChange={handleChange} required style={{ flex: 1, padding: 8, borderRadius: 6, border: '1px solid #e0e0e0' }}>
           <option value="">Pilih Apartemen</option>
-          {apartemen && apartemen.map(a => (
+          {safeApartemen.map(a => (
             <option key={a.id_apartemen} value={a.id_apartemen}>{a.nama_apartemen}</option>
           ))}
         </select>
@@ -103,7 +108,7 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
             <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               <select name="id_apartemen" value={form.id_apartemen} onChange={handleChange} required style={{ flex: 1, padding: 8, borderRadius: 6, border: '1px solid #e0e0e0' }}>
                 <option value="">Pilih Apartemen</option>
-                {apartemen && apartemen.map(a => (
+                {safeApartemen.map(a => (
                   <option key={a.id_apartemen} value={a.id_apartemen}>{a.nama_apartemen}</option>
                 ))}
               </select>
@@ -125,7 +130,7 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
       )}
 
       <ul style={{ padding: 0 }}>
-        {kamar.map((k, idx) => (
+        {safeKamar.map((k, idx) => (
           <li key={k.id_kamar} style={{ listStyle: 'none', background: idx % 2 === 0 ? '#f5f7fa' : '#fff', marginBottom: 6, padding: 10, borderRadius: 6, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span>
               <b>{k.nomor_kamar}</b> - {k.tipe_kamar} - <span style={{ color: k.status === 'Tersedia' ? '#1a7f37' : '#a61a1a' }}>{k.status}</span>

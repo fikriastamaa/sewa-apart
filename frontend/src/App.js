@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import AdminDashboard from './components/AdminDashboard';
 import KamarCrud from './components/KamarCrud';
 import ApartemenCrud from './components/ApartemenCrud';
@@ -7,6 +7,7 @@ import SewaKamarForm from './components/SewaKamarForm';
 import KamarListUser from './components/KamarListUser';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import './App.css';
 
 function App() {
@@ -21,13 +22,38 @@ function App() {
   const [authPage, setAuthPage] = useState('login');
   const [refreshSewa, setRefreshSewa] = useState(0);
   const [activeTab, setActiveTab] = useState('kamar'); // 'kamar', 'pesanan', 'checkout'
+  const tabRef = useRef(null);
 
   // Fetch kamar & apartemen dari backend
   const fetchKamar = () => {
-    fetch('https://be-sewaapart-86067911510.us-central1.run.app/kamar').then(res => res.json()).then(setKamar);
+    const token = localStorage.getItem('token');
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/kamar', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    })
+      .then(async res => {
+        if (res.status === 401) {
+          alert('Session Anda telah habis, silakan login ulang.');
+          handleLogout();
+          return [];
+        }
+        return res.json();
+      })
+      .then(data => Array.isArray(data) ? setKamar(data) : setKamar([]));
   };
   const fetchApartemen = () => {
-    fetch('https://be-sewaapart-86067911510.us-central1.run.app/apartements').then(res => res.json()).then(setApartemen);
+    const token = localStorage.getItem('token');
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/apartements', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    })
+      .then(async res => {
+        if (res.status === 401) {
+          alert('Session Anda telah habis, silakan login ulang.');
+          handleLogout();
+          return [];
+        }
+        return res.json();
+      })
+      .then(data => Array.isArray(data) ? setApartemen(data) : setApartemen([]));
   };
 
   useEffect(() => {
@@ -100,7 +126,6 @@ function App() {
   // Penyewa
   return (
     <div className="App">
-
       {/* Navbar Atas */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 16, background: '#fff', borderBottom: '1px solid #e0e0e0', marginBottom: 0 }}>
         <div style={{ display: 'flex', gap: 0 }}>
@@ -113,16 +138,24 @@ function App() {
           <button onClick={handleLogout} style={{ background: '#e74c3c', color: '#fff', border: 'none', borderRadius: 6, padding: '6px 18px', fontWeight: 600, cursor: 'pointer' }}>Logout</button>
         </div>
       </div>
-      {/* Konten */}
-      {activeTab === 'kamar' && (
-        <KamarListUser onPilihKamar={setKamarDipilih} apartemen={apartemen} />
-      )}
-      {kamarDipilih && (
-        <SewaKamarForm kamarDipilih={kamarDipilih} onClose={() => setKamarDipilih(null)} userLogin={user} onSewaSuccess={() => setRefreshSewa(x => x+1)} />
-      )}
-      {(activeTab === 'pesanan' || activeTab === 'checkout') && (
-        <UserDashboard refreshSewa={refreshSewa} userLogin={user} activeTab={activeTab} setActiveTab={setActiveTab} />
-      )}
+      {/* Konten dengan animasi geser antar tab */}
+      <div className="tab-content-anim">
+        <TransitionGroup component={null}>
+          <CSSTransition key={activeTab} classNames="slide-fade" timeout={400} nodeRef={tabRef}>
+            <div ref={tabRef}>
+              {activeTab === 'kamar' && (
+                <KamarListUser onPilihKamar={setKamarDipilih} apartemen={apartemen} animateList={true} />
+              )}
+              {kamarDipilih && (
+                <SewaKamarForm kamarDipilih={kamarDipilih} onClose={() => setKamarDipilih(null)} userLogin={user} onSewaSuccess={() => setRefreshSewa(x => x+1)} />
+              )}
+              {(activeTab === 'pesanan' || activeTab === 'checkout') && (
+                <UserDashboard refreshSewa={refreshSewa} userLogin={user} activeTab={activeTab} setActiveTab={setActiveTab} animateList={true} />
+              )}
+            </div>
+          </CSSTransition>
+        </TransitionGroup>
+      </div>
       {/* Watermark */}
       <div style={{ textAlign: 'center', color: '#b0b0b0', fontSize: 13, marginTop: 48, marginBottom: 8 }}>
         © {new Date().getFullYear()} Lee Sitanggang by Astama. All rights reserved.

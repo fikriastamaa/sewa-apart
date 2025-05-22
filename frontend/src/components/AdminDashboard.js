@@ -20,6 +20,10 @@ const AdminDashboard = ({ kamar, apartemen, fetchKamar, fetchApartemen, children
     fetchAll();
   }, []);
 
+  // Pastikan kamar adalah array agar .map tidak error
+  const safeKamar = Array.isArray(kamar) ? kamar : [];
+  const safeApartemen = Array.isArray(apartemen) ? apartemen : [];
+
   return (
     <div style={{ display: 'flex', minHeight: 600, background: '#f4f6fa', borderRadius: 16 }}>
       {/* Sidebar */}
@@ -79,7 +83,7 @@ const AdminDashboard = ({ kamar, apartemen, fetchKamar, fetchApartemen, children
             </table>
             <h3 style={{ color: '#4a90e2', marginBottom: 12 }}>List Kamar</h3>
             <ul style={{ padding: 0, marginBottom: 32 }}>
-              {kamar.map((k, idx) => (
+              {safeKamar.map((k, idx) => (
                 <li key={k.id_kamar} style={{ listStyle: 'none', background: idx % 2 === 0 ? '#f5f7fa' : '#fff', marginBottom: 6, padding: 10, borderRadius: 6 }}>
                   <b>{k.nomor_kamar}</b> - {k.tipe_kamar} - <span style={{ color: k.status === 'Tersedia' ? '#1a7f37' : '#a61a1a' }}>{k.status}</span>
                 </li>
@@ -87,7 +91,7 @@ const AdminDashboard = ({ kamar, apartemen, fetchKamar, fetchApartemen, children
             </ul>
             <h3 style={{ color: '#4a90e2', marginBottom: 12 }}>List Apartemen</h3>
             <ul style={{ padding: 0 }}>
-              {apartemen.map((a, idx) => (
+              {safeApartemen.map((a, idx) => (
                 <li key={a.id_apartemen} style={{ listStyle: 'none', background: idx % 2 === 0 ? '#fff' : '#f5f7fa', marginBottom: 6, padding: 10, borderRadius: 6 }}>
                   <b>{a.nama_apartemen}</b> - {a.alamat}
                 </li>

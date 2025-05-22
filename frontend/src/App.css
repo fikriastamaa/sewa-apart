@@ -85,3 +85,46 @@ button, input, select, textarea {
   text-decoration: underline;
   cursor: pointer;
 }
+
+/* Animasi slide dan fade untuk tab dan animasi muncul satu per satu untuk list kamar */
+.tab-content-anim {
+  min-height: 500px;
+  position: relative;
+}
+.slide-fade-enter {
+  opacity: 0;
+  transform: translateX(40px);
+  z-index: 1;
+}
+.slide-fade-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 400ms, transform 400ms;
+}
+.slide-fade-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.slide-fade-exit-active {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 400ms, transform 400ms;
+}
+
+.kamar-list-anim {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+}
+.kamar-card-anim {
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  animation: fadeInUp 0.5s forwards;
+}
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

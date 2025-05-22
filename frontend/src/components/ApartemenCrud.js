@@ -66,6 +66,9 @@ const ApartemenCrud = ({ apartemen, fetchApartemen }) => {
     setShowPopup(false);
   };
 
+  // Pastikan apartemen adalah array agar .map tidak error
+  const safeApartemen = Array.isArray(apartemen) ? apartemen : [];
+
   return (
     <div style={{ maxWidth: 700, margin: '40px auto', background: '#fff', borderRadius: 12, boxShadow: '0 2px 16px #eee', padding: 32 }}>
       <h3 style={{ color: '#4a90e2', marginBottom: 16 }}>CRUD Apartemen</h3>
@@ -101,7 +104,7 @@ const ApartemenCrud = ({ apartemen, fetchApartemen }) => {
       )}
 
       <ul style={{ padding: 0 }}>
-        {apartemen.map((a, idx) => (
+        {safeApartemen.map((a, idx) => (
           <li key={a.id_apartemen} style={{ listStyle: 'none', background: idx % 2 === 0 ? '#f5f7fa' : '#fff', marginBottom: 6, padding: 10, borderRadius: 6, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <span><b>{a.nama_apartemen}</b> - {a.alamat}</span>
             <div>
