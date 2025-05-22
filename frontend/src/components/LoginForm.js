@@ -12,7 +12,7 @@ const LoginForm = ({ onLogin, onSwitch }) => {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/login', {
+      const res = await fetch('https://be-sewaapart-86067911510.us-central1.run.app/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

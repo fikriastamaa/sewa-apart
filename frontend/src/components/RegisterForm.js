@@ -21,7 +21,7 @@ const RegisterForm = ({ onRegister, onSwitch }) => {
     setError('');
     setSuccess('');
     try {
-      const res = await fetch('http://localhost:5000/register', {
+      const res = await fetch('https://be-sewaapart-86067911510.us-central1.run.app/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

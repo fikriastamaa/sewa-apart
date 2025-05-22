@@ -4,7 +4,7 @@ const KamarListUser = ({ onPilihKamar, apartemen }) => {
   const [kamar, setKamar] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/kamar')
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/kamar')
       .then(res => res.json())
       .then(setKamar);
   }, []);

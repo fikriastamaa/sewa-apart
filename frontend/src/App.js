@@ -24,10 +24,10 @@ function App() {
 
   // Fetch kamar & apartemen dari backend
   const fetchKamar = () => {
-    fetch('http://localhost:5000/kamar').then(res => res.json()).then(setKamar);
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/kamar').then(res => res.json()).then(setKamar);
   };
   const fetchApartemen = () => {
-    fetch('http://localhost:5000/apartements').then(res => res.json()).then(setApartemen);
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/apartements').then(res => res.json()).then(setApartemen);
   };
 
   useEffect(() => {

@@ -8,7 +8,7 @@ const UserDashboard = ({ refreshSewa, userLogin, activeTab, setActiveTab }) => {
 
   useEffect(() => {
     if (!userLogin) return;
-    fetch('http://localhost:5000/sewa-kamar')
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar')
       .then(res => res.json())
       .then(data => {
         setSewa(data.filter(item => item.id_user === userLogin.id_user));
@@ -21,7 +21,7 @@ const UserDashboard = ({ refreshSewa, userLogin, activeTab, setActiveTab }) => {
     setSuccessMsg('');
     setErrorMsg('');
     try {
-      const res = await fetch(`http://localhost:5000/sewa-kamar/${id_sewa}`, {
+      const res = await fetch(`https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar/${id_sewa}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status_sewa: 'Selesai' })

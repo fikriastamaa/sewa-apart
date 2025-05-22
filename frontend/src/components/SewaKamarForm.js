@@ -19,7 +19,7 @@ const SewaKamarForm = ({ kamarDipilih, onClose, userLogin, onSewaSuccess }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    fetch('http://localhost:5000/sewa-kamar', {
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form)

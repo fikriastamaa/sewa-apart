@@ -11,7 +11,7 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
     e.preventDefault();
     if (editId) {
       // Edit mode
-      fetch(`http://localhost:5000/kamar/${editId}`, {
+      fetch(`https://be-sewaapart-86067911510.us-central1.run.app/kamar/${editId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -23,7 +23,7 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
       });
     } else {
       // Add mode
-      fetch('http://localhost:5000/kamar', {
+      fetch('https://be-sewaapart-86067911510.us-central1.run.app/kamar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -35,7 +35,7 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
   };
 
   const handleDelete = id => {
-    fetch(`http://localhost:5000/kamar/${id}`, { method: 'DELETE' }).then(() => fetchKamar());
+    fetch(`https://be-sewaapart-86067911510.us-central1.run.app/kamar/${id}`, { method: 'DELETE' }).then(() => fetchKamar());
   };
 
   const handleEdit = k => {

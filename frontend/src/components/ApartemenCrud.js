@@ -11,7 +11,7 @@ const ApartemenCrud = ({ apartemen, fetchApartemen }) => {
     e.preventDefault();
     if (editId) {
       // Edit mode
-      fetch(`http://localhost:5000/apartements/${editId}`, {
+      fetch(`https://be-sewaapart-86067911510.us-central1.run.app/apartements/${editId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -23,7 +23,7 @@ const ApartemenCrud = ({ apartemen, fetchApartemen }) => {
       });
     } else {
       // Add mode
-      fetch('http://localhost:5000/apartements', {
+      fetch('https://be-sewaapart-86067911510.us-central1.run.app/apartements', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
@@ -35,7 +35,7 @@ const ApartemenCrud = ({ apartemen, fetchApartemen }) => {
   };
 
   const handleDelete = id => {
-    fetch(`http://localhost:5000/apartements/${id}`, { method: 'DELETE' }).then(() => fetchApartemen());
+    fetch(`https://be-sewaapart-86067911510.us-central1.run.app/apartements/${id}`, { method: 'DELETE' }).then(() => fetchApartemen());
   };
 
   const handleEdit = a => {

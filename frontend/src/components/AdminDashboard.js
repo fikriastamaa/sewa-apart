@@ -6,7 +6,7 @@ const AdminDashboard = ({ kamar, apartemen, fetchKamar, fetchApartemen, children
 
   // Ambil data sewa kamar dari backend
   const fetchAll = () => {
-    fetch('http://localhost:5000/sewa-kamar')
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar')
       .then(res => res.json())
       .then(setSewaKamar);
     fetchKamar();
