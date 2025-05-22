@@ -9,11 +9,15 @@ const ApartemenCrud = ({ apartemen, fetchApartemen }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
     if (editId) {
       // Edit mode
       fetch(`https://be-sewaapart-86067911510.us-central1.run.app/apartements/${editId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify(form)
       }).then(() => {
         setForm({ nama_apartemen: '', alamat: '', jumlah_kamar: '', fasilitas: '' });
@@ -25,7 +29,10 @@ const ApartemenCrud = ({ apartemen, fetchApartemen }) => {
       // Add mode
       fetch('https://be-sewaapart-86067911510.us-central1.run.app/apartements', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify(form)
       }).then(() => {
         setForm({ nama_apartemen: '', alamat: '', jumlah_kamar: '', fasilitas: '' });
@@ -35,7 +42,11 @@ const ApartemenCrud = ({ apartemen, fetchApartemen }) => {
   };
 
   const handleDelete = id => {
-    fetch(`https://be-sewaapart-86067911510.us-central1.run.app/apartements/${id}`, { method: 'DELETE' }).then(() => fetchApartemen());
+    const token = localStorage.getItem('token');
+    fetch(`https://be-sewaapart-86067911510.us-central1.run.app/apartements/${id}`, {
+      method: 'DELETE',
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    }).then(() => fetchApartemen());
   };
 
   const handleEdit = a => {

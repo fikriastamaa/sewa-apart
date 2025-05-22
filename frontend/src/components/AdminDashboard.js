@@ -6,9 +6,12 @@ const AdminDashboard = ({ kamar, apartemen, fetchKamar, fetchApartemen, children
 
   // Ambil data sewa kamar dari backend
   const fetchAll = () => {
-    fetch('https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar')
+    const token = localStorage.getItem('token');
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    })
       .then(res => res.json())
-      .then(setSewaKamar);
+      .then(data => Array.isArray(data) ? setSewaKamar(data) : setSewaKamar([]));
     fetchKamar();
     fetchApartemen();
   };

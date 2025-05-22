@@ -9,11 +9,15 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
     if (editId) {
       // Edit mode
       fetch(`https://be-sewaapart-86067911510.us-central1.run.app/kamar/${editId}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify(form)
       }).then(() => {
         setForm({ id_apartemen: '', nomor_kamar: '', tipe_kamar: '', harga_per_bulan: '', status: 'Tersedia', fasilitas: '', gambar: '' });
@@ -25,7 +29,10 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
       // Add mode
       fetch('https://be-sewaapart-86067911510.us-central1.run.app/kamar', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify(form)
       }).then(() => {
         setForm({ id_apartemen: '', nomor_kamar: '', tipe_kamar: '', harga_per_bulan: '', status: 'Tersedia', fasilitas: '', gambar: '' });
@@ -35,7 +42,11 @@ const KamarCrud = ({ kamar, apartemen, fetchKamar }) => {
   };
 
   const handleDelete = id => {
-    fetch(`https://be-sewaapart-86067911510.us-central1.run.app/kamar/${id}`, { method: 'DELETE' }).then(() => fetchKamar());
+    const token = localStorage.getItem('token');
+    fetch(`https://be-sewaapart-86067911510.us-central1.run.app/kamar/${id}`, {
+      method: 'DELETE',
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    }).then(() => fetchKamar());
   };
 
   const handleEdit = k => {

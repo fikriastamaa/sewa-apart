@@ -8,10 +8,13 @@ const UserDashboard = ({ refreshSewa, userLogin, activeTab, setActiveTab }) => {
 
   useEffect(() => {
     if (!userLogin) return;
-    fetch('https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar')
+    const token = localStorage.getItem('token');
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    })
       .then(res => res.json())
       .then(data => {
-        setSewa(data.filter(item => item.id_user === userLogin.id_user));
+        setSewa(Array.isArray(data) ? data.filter(item => item.id_user === userLogin.id_user) : []);
       });
   }, [refreshSewa, userLogin]);
 
@@ -21,9 +24,13 @@ const UserDashboard = ({ refreshSewa, userLogin, activeTab, setActiveTab }) => {
     setSuccessMsg('');
     setErrorMsg('');
     try {
+      const token = localStorage.getItem('token');
       const res = await fetch(`https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar/${id_sewa}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         body: JSON.stringify({ status_sewa: 'Selesai' })
       });
       if (res.ok) {

@@ -19,9 +19,13 @@ const SewaKamarForm = ({ kamarDipilih, onClose, userLogin, onSewaSuccess }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
     fetch('https://be-sewaapart-86067911510.us-central1.run.app/sewa-kamar', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
+      },
       body: JSON.stringify(form)
     }).then(() => {
       setForm({ id_kamar: '', id_user: '', tanggal_mulai: '', tanggal_selesai: '' });

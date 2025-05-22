@@ -4,9 +4,13 @@ const KamarListUser = ({ onPilihKamar, apartemen }) => {
   const [kamar, setKamar] = useState([]);
 
   useEffect(() => {
-    fetch('https://be-sewaapart-86067911510.us-central1.run.app/kamar')
+    // Ambil token dari localStorage (atau props jika sudah ada)
+    const token = localStorage.getItem('token');
+    fetch('https://be-sewaapart-86067911510.us-central1.run.app/kamar', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    })
       .then(res => res.json())
-      .then(setKamar);
+      .then(data => Array.isArray(data) ? setKamar(data) : setKamar([]));
   }, []);
 
   // Helper untuk dapatkan nama apartemen dari id_apartemen
