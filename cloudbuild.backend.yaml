@@ -3,20 +3,20 @@ steps:
     args: ["cp", "${_ENV}", "backend/.env"]
 
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/be-auth-fikri", "."]
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/be-sewaapart", "."]
     dir: "backend"
 
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/$PROJECT_ID/be-auth-fikri"]
+    args: ["push", "gcr.io/$PROJECT_ID/be-sewaapart"]
 
   - name: "gcr.io/cloud-builders/gcloud"
     args:
       [
         "run",
         "deploy",
-        "be-auth-fikri",
+        "be-sewaapart",
         "--image",
-        "gcr.io/$PROJECT_ID/be-auth-fikri",
+        "gcr.io/$PROJECT_ID/be-sewaapart",
         "--timeout",
         "1000s",
         "--port",
